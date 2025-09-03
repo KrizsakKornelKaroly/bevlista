@@ -14,7 +14,7 @@ addBtn.addEventListener('click', () => {
         window.alert("Nem adtál meg minden adatot!");
         return;
     }
-
+    //addevl. selectionchange
     items.push({
         name: nameField.value,
         price: Number(priceField.value),
@@ -22,7 +22,8 @@ addBtn.addEventListener('click', () => {
         sum: priceField.value * countField.value
     });
 
-
+    //let idx = products.findIndex(item => item.name = nameField.value)
+    
     
     if(!products.name.includes(nameField.value)){
         products.push({
