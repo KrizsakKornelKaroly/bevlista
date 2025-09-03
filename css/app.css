@@ -6,7 +6,6 @@ header{
 footer{
     text-align: center;
     padding: 10px;
-
 }
 
 footer h5{
@@ -17,4 +16,7 @@ footer h6{
     font-size: 80%;
     font-weight: bold;
     color: var(--bs-primary);
+}
+tfoot{
+    font-size: 150% !important;
 }
