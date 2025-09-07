@@ -10,11 +10,12 @@ let items = [];
 let products = [];
 
 addBtn.addEventListener('click', () => {
+
     if (nameField.value == '' || priceField.value == 0 || countField.value == 0) {
         window.alert("Nem adtál meg minden adatot!");
         return;
     }
-    //addevl. selectionchange
+
     items.push({
         name: nameField.value,
         price: Number(priceField.value),
@@ -22,27 +23,36 @@ addBtn.addEventListener('click', () => {
         sum: priceField.value * countField.value
     });
 
-    //let idx = products.findIndex(item => item.name = nameField.value)
-    
-    
-    if(!products.name.includes(nameField.value)){
+    let meglevoTermek = products.find(product => product.name == nameField.value)
+    if (meglevoTermek) {
+        if (meglevoTermek.price != Number(priceField.value)) {
+            items.forEach(item => {
+                if (item.name == nameField.value) {
+                    item.price = Number(priceField.value);
+                    item.sum = item.price * item.count;
+                }});
+            meglevoTermek.price = Number(priceField.value);
+        }
+    }
+    else {
         products.push({
             name: nameField.value,
             price: Number(priceField.value)
         });
     }
-    /*else{
-        let idx = products.indexOf(nameField.value)
-        priceField.value = products[idx].price
-    }*/
-
-
-    
 
     RefreshTable();
     ClearForm();
     Save();
 });
+
+nameField.addEventListener('selectionchange', () => {
+    let item = products.find(product => product.name == nameField.value);
+    if (items) {
+        priceField.value = item.price;
+    }
+});
+
 
 function RefreshTable() {
     itemsList.innerHTML = "";
@@ -51,7 +61,7 @@ function RefreshTable() {
 
     for (let j = 0; j < products.length; j++) {
         let optionData = document.createElement('option')
-        optionData.value = products[j];
+        optionData.value = products[j].name;
         nameFieldList.appendChild(optionData)
     }
 
@@ -112,6 +122,7 @@ function Load() {
     if (localStorage.getItem("bevLista")) {
         items = JSON.parse(localStorage.getItem("bevLista"));
     }
+
     if (localStorage.getItem("products")) {
         products = JSON.parse(localStorage.getItem("products"));
     }
